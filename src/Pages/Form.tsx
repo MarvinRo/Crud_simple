@@ -14,18 +14,17 @@ function Form() {
     axios.get('http://localhost:3001/api/get').then((response) => {
       setUserList(response.data)
   })
-  },[])
+  },[]) 
 
   function onSubmit(){
-    axios.post("http://localhost:3001/api/cadastro",{
+    axios.post("http://localhost:3001/api/post",{
       login:login,
       email:email,
-      password:password,
+      senha:password,
     }).then(()=>{
       alert("Success")
     });
   };
-
   
 
   return (
@@ -49,11 +48,13 @@ function Form() {
       </label> */}
 
       <button onClick={onSubmit}>Cadastrar</button>
-
+      
     </div>
+    
+    
       {userList.map((val)=>{
         return <h1>Login:{val.login} | Email:{val.email} | Senha:{val.password}</h1>
-        })}
+        })} 
     </>
   )
 }
