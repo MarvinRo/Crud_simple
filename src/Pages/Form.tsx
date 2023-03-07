@@ -48,9 +48,8 @@ function Form() {
       </label> */}
 
       <button onClick={onSubmit}>Cadastrar</button>
-      
+
     </div>
-    
     
       {userList.map((val)=>{
         return <h1>Login:{val.login} | Email:{val.email} | Senha:{val.password}</h1>
