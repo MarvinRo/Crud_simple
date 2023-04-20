@@ -22,3 +22,25 @@ label{
 button{
   margin-bottom: 10px;
 }
+.UserList{
+  padding: 0%;
+  margin: 10px;
+  font-size: 24px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  text-align:center;
+  align-items:center;;
+  border: 1px black solid;
+  width: 900px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+    
+}
+.button_map{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-left: 5px;
+}
