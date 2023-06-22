@@ -1,9 +1,69 @@
-import { useState,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react';
 import axios from 'axios'
 import '../Style/Form.css'
+import { Button, Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 
-function Form() {
+
+interface DataType {
+  key?: React.Key;
+  login: string;
+  email: string;
+  senha: string;
+}
+
+const columns: ColumnsType<DataType> = [
+  {
+    title: 'Id',
+    dataIndex: `key`,
+    width: 50,
+  },
+  {
+    title: 'Nome',
+    dataIndex: `login`,
+    width: 150,
+  },
+  {
+    title: 'Email',
+    dataIndex: `email`,
+    width: 200,
+  },
+  {
+    title: 'Senha',
+    dataIndex: `senha`,
+  },
+  {
+    title: 'Opções',
+  },
+];
+
+const data: DataType[] = [];
+
+axios.get('http://localhost:3001/api/get').then((response) => {
+
+  for (let i = 0; i < response.data.length; i++) {
+    data.push({
+      key: i+1,
+      login: response.data[i].login,
+      email: response.data[i].email,
+      senha: response.data[i].senha,
+    });
+  }
+})
+
+const Form: React.FC = () => {
+  
+
+  return (
+    <div style={{marginTop:'25vh',marginRight:'auto',marginLeft:'auto',width:'900px'}}>
+      <Table columns={columns} dataSource={data} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+    </div>
+ )
+
+};
+
+/* function Form() {
   const [login,setLogin]=useState("");
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
@@ -94,7 +154,7 @@ function Form() {
           </div>)
         })} 
     </>
-  )
-}
+  ) */
+
 
 export default Form
