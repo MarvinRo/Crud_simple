@@ -4,6 +4,7 @@ import axios from 'axios'
 import '../Style/Form.css'
 import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import ModalCadastro from './Modal';
 
 
 interface DataType {
@@ -57,6 +58,7 @@ const Form: React.FC = () => {
 
   return (
     <div style={{marginTop:'25vh',marginRight:'auto',marginLeft:'auto',width:'900px'}}>
+      <ModalCadastro/>
       <Table columns={columns} dataSource={data} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
     </div>
  )
