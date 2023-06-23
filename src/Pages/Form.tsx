@@ -5,7 +5,9 @@ import '../Style/Form.css'
 import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import ModalCadastro from './Modal';
-
+import lixeira from '../../public/trash.png'
+import lapis from '../../public/writing.png'
+import ModalUpload from './ModalUpload';
 
 interface DataType {
   key?: React.Key;
@@ -18,7 +20,7 @@ const columns: ColumnsType<DataType> = [
   {
     title: 'Id',
     dataIndex: `key`,
-    width: 50,
+    width: 80,
   },
   {
     title: 'Nome',
@@ -35,37 +37,62 @@ const columns: ColumnsType<DataType> = [
     dataIndex: `senha`,
   },
   {
-    title: 'Opções',
+    title: 'Action',
+    dataIndex: '',
+    key: 'x',
+    render: () =>
+    <div style={{display:'flex'}}>
+      
+      <ModalUpload/>
+      
+      <button style={{ background: 'transparent', border: 'none', cursor: 'pointer' }} type="submit" className="button_map" /* onClick = {()=> { onDelete(response.data.login) }} */>
+          <img src={lixeira} />
+        </button>
+    </div>,
+      width: 100,
   },
 ];
 
 const data: DataType[] = [];
 
+
 axios.get('http://localhost:3001/api/get').then((response) => {
+
 
   for (let i = 0; i < response.data.length; i++) {
     data.push({
-      key: i+1,
+      key: response.data[i].id,
       login: response.data[i].login,
       email: response.data[i].email,
       senha: response.data[i].senha,
     });
+    console.log(i);
   }
 })
 
+function onDelete(login: any) {
+  axios.delete(`http://localhost:3001/api/delete/${login}`)
+
+}
+
+
 const Form: React.FC = () => {
-  
+
+  useEffect(() => {
+  }), [data]
+
+  console.log("userEffect", data);
 
   return (
-    <div style={{marginTop:'25vh',marginRight:'auto',marginLeft:'auto',width:'900px'}}>
+    <div style={{ marginTop: '25vh', marginRight: 'auto', marginLeft: 'auto', width: '900px' }}>
       <ModalCadastro/>
       <Table columns={columns} dataSource={data} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
     </div>
- )
+  )
 
 };
-
-/* function Form() {
+/*
+function Form() {
   const [login,setLogin]=useState("");
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
@@ -93,7 +120,7 @@ const Form: React.FC = () => {
     setUpdate("")
   }
 
-  function onSubmit(){
+   function onSubmit(){
     if(validation_password !== password){
       alert("Senhas diferentes pf corrija")
     }  
@@ -157,6 +184,5 @@ const Form: React.FC = () => {
         })} 
     </>
   ) */
-
 
 export default Form

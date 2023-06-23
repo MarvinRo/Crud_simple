@@ -6,7 +6,6 @@ const ModalCadastro: React.FC = () => {
     const [login, setLogin] = useState("");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [update, setUpdate] = useState("");
     const [validation_password, setValidation_Password] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -48,7 +47,7 @@ const ModalCadastro: React.FC = () => {
             <Button type="primary" onClick={showModal}>
                 + Cadastrar Usuário
             </Button>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={onSubmit} onCancel={handleCancel}>
+            <Modal title="Cadastro de Usuário" open={isModalOpen} onOk={onSubmit} onCancel={handleCancel}>
                 <label>Nome:</label>
                 <Input placeholder='Digite seu nome' onChange={(e)=>{setLogin(e.target.value)}}></Input>
                 <label>Email:</label>
