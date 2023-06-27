@@ -13,12 +13,11 @@ const ModalUpload: React.FC<ModalUploadProps> = ({ login, fetchData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
-    setUpdate("");
     setIsModalOpen(true);
   };
 
   const handleCancel = () => {
-    setUpdate("");
+    resetForm();
     setIsModalOpen(false);
   };
 
@@ -30,14 +29,17 @@ const ModalUpload: React.FC<ModalUploadProps> = ({ login, fetchData }) => {
       })
       .then(response => {
         setIsModalOpen(false);
-        setUpdate("");
+        resetForm();
         fetchData();
       })
       .catch(error => {
         console.error(error);
       });
-      
-  }
+  };
+
+  const resetForm = () => {
+    setUpdate("");
+  };
   
   return (
     <>
@@ -57,7 +59,7 @@ const ModalUpload: React.FC<ModalUploadProps> = ({ login, fetchData }) => {
         cancelText='Cancelar'
       >
         <label>Senha:</label>
-        <Input placeholder="Digite sua senha" onChange={e => setUpdate(e.target.value)} />
+        <Input placeholder="Digite sua senha" value={update} onChange={e => setUpdate(e.target.value)} />
       </Modal>
     </>
   );
