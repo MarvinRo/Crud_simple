@@ -3,7 +3,11 @@ import { Button, Modal, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
-const ModalCadastro: React.FC = () => {
+interface ModalCadastroProps {
+  fetchData: () => void;
+}
+
+const ModalCadastro: React.FC<ModalCadastroProps> = ({  fetchData }) => {
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,6 +44,7 @@ const ModalCadastro: React.FC = () => {
         });
       setIsModalOpen(false);
       ClearCamp();
+      fetchData()
     }
   };
 
@@ -57,7 +62,7 @@ const ModalCadastro: React.FC = () => {
       </Button>
       <Modal
         title="Cadastro de Usuário"
-        visible={isModalOpen}
+        open={isModalOpen}
         okText="Cadastrar"
         cancelText="Cancelar"
         onOk={onSubmit}
@@ -78,18 +83,18 @@ const ModalCadastro: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <label>Senha:</label>
-        <Input
+        <Input.Password
           placeholder="Digite sua Senha"
           prefix="🔒"
-          type="password"
+          type="text"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <label>Confirme sua Senha:</label>
-        <Input
+        <Input.Password
           placeholder="Confirme a sua Senha"
           prefix="🔐"
-          type="password"
+          type="text"
           value={validationPassword}
           onChange={(e) => setValidationPassword(e.target.value)}
         />

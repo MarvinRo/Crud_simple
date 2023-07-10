@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import axios from 'axios';
 import '../Style/Form.css';
-import { Button, Table } from 'antd';
+import { Badge, Button, Popover, Switch, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import ModalCadastro from './Modal';
 import lixeira from '../img/trash.png';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import ModalUpload from './ModalUpload';
 
 interface DataType {
@@ -17,36 +17,48 @@ interface DataType {
 }
 
 const Form: React.FC = () => {
-  
+
   const [data, setData] = useState<DataType[]>([]);
   const [selectedLogin, setSelectedLogin] = useState<string>(""); // Estado para armazenar o login selecionado
 
   const columns: ColumnsType<DataType> = [
     {
+      align:'center',
       title: 'Id',
       dataIndex: 'key',
       width: 80,
     },
     {
+      align:'center',
       title: 'Nome',
       dataIndex: 'login',
       width: 150,
     },
     {
+      align:'center',
       title: 'Email',
       dataIndex: 'email',
       width: 200,
     },
     {
+      align:'center',
       title: 'Senha',
-      dataIndex: 'senha',
+      render: (fetchData) => (
+        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+          <Popover content={fetchData.senha} title="Senha" trigger="click">
+            <Button style={{border:"none", background: 'transparent', boxShadow:"none"}}><EyeOutlined/></Button>
+          </Popover>
+        </div>
+      ),
+      dataIndex: '',
       width: 150,
     },
     {
+      align:'center',
       title: 'Action',
       dataIndex: '',
       key: 'x',
-      render: (text, record) => (
+      render: (record) => (
         <div style={{ display: 'flex' }}>
           <ModalUpload login={selectedLogin} fetchData={fetchData} /> {/* Passando o login selecionado e a função fetchData como propriedades */}
           <button
@@ -63,10 +75,11 @@ const Form: React.FC = () => {
     },
   ];
 
+  
   useEffect(() => {
-    fetchData();
+    fetchData()
   }, []);
-
+  
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/get');
@@ -93,7 +106,7 @@ const Form: React.FC = () => {
 
   return (
     <div style={{ marginTop: '25vh', marginRight: 'auto', marginLeft: 'auto', width: '900px' }}>
-      <ModalCadastro />
+      <ModalCadastro fetchData={fetchData} />
       <Table
         columns={columns}
         dataSource={data}
